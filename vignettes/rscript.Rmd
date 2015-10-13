@@ -1,0 +1,73 @@
+---
+title: "Supplement Meng et al.,"
+author: "Chen Meng, Aedin Culhane"
+date: "October 13, 2015"
+output: html_document
+---
+
+#  loading package data and define color code
+
+```{r setup, message=FALSE, warning=FALSE}
+library(omicade4)
+library(genefilter)
+library(beeswarm)
+library(SciViews)
+library(knitr)
+opts_chunk$set(fig.path="fig", cache=FALSE, message=FALSE)
+```
+
+# loading data
+```{r loadData}
+## Exists at "https://github.com/mengchen18/NCI60Example/raw/master/nci60.RDA"
+load("../data/nci60.RDA")
+```
+
+
+```{r parseData}
+sapply(nci60, dim)
+cancerType <- substr(colnames(nci60$mrna), 1, 2)
+
+col <- as.factor(cancerType)
+levels(col) <- c("blue", "brown", "gray75")
+col <- as.character(col)
+```
+
+ 
+#   principal component analysis and biplot
+
+Do PCA and plot
+
+```{r 1_pca, dev='png'}
+pc <- pcomp(t(nci60$mrna[subsetGenes, ]), center = TRUE, scale = TRUE)
+par(mfrow = c(1,3))
+plot(pc, col = "grey40", main = "", ylim = c(0,9))
+biplot(pc, font = 2, cex = 0.6, xlim = c(-0.5,0.5), ylim = c(-0.4, 0.4), col = c("grey40", "darkred"))
+vectorplot(correlation(pc), labels = sapply(strsplit(subsetGenes, "_"), "[", 1), font = 2, 
+           col = "grey40", circle.col = "darkred", main = "", cex = 1, lwd = 2)
+```
+
+# multiple co-inertia analysis and plot
+
+```{r 2_mcia, dev='png'}
+mcoin <- mcia(nci60, cia.nf = 2)
+mcoin$mcoa$RV
+
+data.col <- c(rgb(255, 165, 0, alpha = 100, maxColorValue = 255), 
+              rgb(0, 255, 0, alpha = 100, maxColorValue = 255), 
+              rgb(0, 0, 255, alpha = 100, maxColorValue = 255))
+
+plot.mcia(mcoin, sample.lab = TRUE, sample.color = col, 
+          phenovec = cancerType, 
+          df.color = data.col, 
+          gene.nlab = 0, sample.legend = FALSE)
+```
+
+# check the correlation of protein profiling between SR and other cell lines
+
+```{r suppl_Cor_SR_otherCells,  dev='png'}
+r <- cor(nci60$prot[, "LE.SR"], nci60$prot[, !colnames(nci60$prot) %in% "LE.SR"])
+ct <- sapply(strsplit(colnames(r), "\\."), "[", 1)
+bxplot(c(r) ~ ct, ylab="Correlation coefficient")
+beeswarm(c(r) ~ ct, add=TRUE, col=c("green", "cyan", "brown"), pch=17, cex=1.2)
+```
+

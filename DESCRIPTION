@@ -1,0 +1,12 @@
+Package: NCI60Example
+Type: Package
+Title: Supplement to Meng et al., Briefings in Bioinformatics Review
+Version: 1.0
+Date: 2015-10-13
+Author: Chen Meng, Aedin Culhane
+Maintainer: Chen Meng <chen.meng@tum.de>
+Description: R Code to reproduce Figure 1 and Figure 2 in Dimension reduction techniques for the integrative analysis of multi-omics data submitted to  Briefings in Bioinformatics
+Imports: omicade4,genefilter,beeswarm,SciViews
+Suggests: knitr
+License: GPLv3
+VignetteBuilder: knitr
