@@ -17,9 +17,17 @@ opts_chunk$set(fig.path="fig", cache=FALSE, message=FALSE)
 ```
 
 # loading data
+The data and code maybe obtained directly from github
+
+```{r git, eval=FALSE}
+library(devtools)
+install_github("aedin/NCI60Example")
+```
+
 ```{r loadData}
-## Exists at "https://github.com/mengchen18/NCI60Example/raw/master/nci60.RDA"
-#load("../data/nci60.RDA")
+## Exists at "https://github.com/aedin/NCI60Example"
+#  https://github.com/aedin/NCI60Example/blob/master/data/nci60.RDA"
+library(NCI60Example)
 data(nci60)
 ```
 
