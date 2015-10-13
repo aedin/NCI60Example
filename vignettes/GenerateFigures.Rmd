@@ -26,7 +26,6 @@ install_github("aedin/NCI60Example")
 
 ```{r loadData}
 ## Exists at "https://github.com/aedin/NCI60Example"
-#  https://github.com/aedin/NCI60Example/blob/master/data/nci60.RDA"
 library(NCI60Example)
 data(nci60)
 ```
