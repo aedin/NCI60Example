@@ -85,8 +85,13 @@ opts_chunk$set(fig.path=&quot;fig&quot;, cache=FALSE, message=FALSE)</code></pre
 </div>
 <div id="loading-data" class="section level1">
 <h1>loading data</h1>
-<pre class="r"><code>## Exists at &quot;https://github.com/mengchen18/NCI60Example/raw/master/nci60.RDA&quot;
-load(&quot;../data/nci60.RDA&quot;)</code></pre>
+<p>The data and code maybe obtained directly from github</p>
+<pre class="r"><code>library(devtools)
+install_github(&quot;aedin/NCI60Example&quot;)</code></pre>
+<pre class="r"><code>## Exists at &quot;https://github.com/aedin/NCI60Example&quot;
+#  https://github.com/aedin/NCI60Example/blob/master/data/nci60.RDA&quot;
+library(NCI60Example)
+data(nci60)</code></pre>
 <pre class="r"><code>sapply(nci60, dim)</code></pre>
 <pre><code>##       mrna prot miRNA
 ## [1,] 12895 7016   537
