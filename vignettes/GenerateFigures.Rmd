@@ -13,7 +13,7 @@ library(genefilter)
 library(beeswarm)
 library(SciViews)
 library(knitr)
-opts_chunk$set(fig.path="fig", cache=FALSE, message=FALSE)
+opts_chunk$set(fig.path="fig_", cache=FALSE, message=FALSE)
 ```
 
 # loading data
@@ -45,7 +45,7 @@ col <- as.character(col)
 
 Do PCA and plot
 
-```{r 1_pca, dev='png'}
+```{r fig1_pca}
 pc <- pcomp(t(nci60$mrna[subsetGenes, ]), center = TRUE, scale = TRUE)
 par(mfrow = c(1,3))
 plot(pc, col = "grey40", main = "", ylim = c(0,9))
@@ -56,7 +56,7 @@ vectorplot(correlation(pc), labels = sapply(strsplit(subsetGenes, "_"), "[", 1),
 
 # multiple co-inertia analysis and plot
 
-```{r 2_mcia, dev='png'}
+```{r fig2_mcia}
 mcoin <- mcia(nci60, cia.nf = 2)
 mcoin$mcoa$RV
 
@@ -72,7 +72,7 @@ plot.mcia(mcoin, sample.lab = TRUE, sample.color = col,
 
 # check the correlation of protein profiling between SR and other cell lines
 
-```{r suppl_Cor_SR_otherCells,  dev='png'}
+```{r suppl_Cor_SR_otherCells}
 r <- cor(nci60$prot[, "LE.SR"], nci60$prot[, !colnames(nci60$prot) %in% "LE.SR"])
 ct <- sapply(strsplit(colnames(r), "\\."), "[", 1)
 bxplot(c(r) ~ ct, ylab="Correlation coefficient")
